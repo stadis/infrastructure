@@ -39,17 +39,17 @@ molly-guard
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
 # Set default shell to zsh
-#/usr/bin/chsh -s "$(which zsh)"
+/usr/bin/chsh -s "$(which zsh)"
 
 # Disable MOTDs
-#/usr/bin/touch ~/.hushlogin
+/usr/bin/touch ~/.hushlogin
 
 # Start fail2ban
-#/usr/bin/systemctl enable --now fail2ban
+/usr/bin/systemctl enable --now fail2ban
 
 # Install oh-my-zsh
-#/usr/bin/sh -c "$(/usr/bin/curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+/usr/bin/sh -c "$(/usr/bin/curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 # Install zsh plugins
 ## zsh-autosuggestions
-#/usr/bin/git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+/usr/bin/git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
