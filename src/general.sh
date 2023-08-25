@@ -53,3 +53,22 @@ molly-guard
 # Install zsh plugins
 ## zsh-autosuggestions
 /usr/bin/git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+# Install dotfiles
+if [ -f ~/.zshrc ]; then /usr/bin/mv ~/.zshrc ~/.zshrc.bak; fi
+/usr/bin/ln -s ~/infrastructure/src/dotfiles/zshrc ~/.zshrc
+if [ -f ~/.vimrc ]; then /usr/bin/mv ~/.vimrc ~/.vimrc.bak; fi
+/usr/bin/ln -s ~/infrastructure/src/dotfiles/vimrc ~/.vimrc
+if [ -f ~/.gitconfig ]; then /usr/bin/mv ~/.gitconfig ~/.gitconfig.bak; fi
+/usr/bin/ln -s ~/infrastructure/src/dotfiles/gitconfig ~/.gitconfig
+
+# Setup MOTD
+/usr/bin/cp ./resources/motd.sh /etc/motd.sh
+/usr/bin/chmod +x /etc/motd.sh
+
+# Setup unattended upgrades
+/usr/bin/cp ./resources/unattended-upgrades/* /etc/apt/apt.conf.d/
+
+# sysctl tweaks
+#/usr/bin/cp ./resources/sysctl.conf /etc/sysctl.conf
+#/usr/sbin/sysctl -p
