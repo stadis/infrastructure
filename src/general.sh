@@ -36,7 +36,7 @@ zsh
 dialog
 molly-guard
 "
-/usr/bin/apt install -y "$(tr '\n' ' ' <<< "$PACKAGES")"
+/usr/bin/apt-get install -y "$(tr '\n' ' ' <<< "$PACKAGES")"
 
 # Set default shell to zsh
 /usr/bin/chsh -s "$(which zsh)"
