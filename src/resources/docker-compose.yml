@@ -6,4 +6,114 @@ services:
         container_name: it-tools
         restart: unless-stopped
         ports:
-            - "6874:80"    
+            - "6874:80"
+    
+    bookstack:
+        image: lscr.io/linuxserver/bookstack
+        container_name: bookstack
+        restart: unless-stopped
+        ports:
+            - "6875:80"
+        env_file: 
+            - .env
+        environment:
+            - PUID=${BOOKSTACK__PUID}
+            - PGID=${BOOKSTACK__PGID}
+            - APP_URL=${BOOKSTACK__APP_URL}
+            - DB_HOST=${BOOKSTACK__DB_HOST}
+            - DB_PORT=${BOOKSTACK__DB_PORT}
+            - DB_USER=${BOOKSTACK__DB_USER}
+            - DB_PASS=${BOOKSTACK__DB_PASS}
+            - DB_DATABASE=${BOOKSTACK__DB_DATABASE}
+            - APP_LANG=${BOOKSTACK__APP_LANG}
+        volumes:
+            - "./dockerData/bookstack_app_data:/config"
+            #- bookstackdata:/config
+        depends_on:
+            - bookstack_db
+    bookstack_db:
+        image: lscr.io/linuxserver/mariadb
+        container_name: bookstack_db
+        restart: unless-stopped
+        env_file: 
+            - .env
+        environment:
+            - PUID=${BOOKSTACK__PUID}
+            - PGID=${BOOKSTACK__PGID}
+            - MYSQL_ROOT_PASSWORD=${BOOKSTACK__MYSQL_ROOT_PASSWORD}
+            - TZ=${BOOKSTACK__TZ}
+            - MYSQL_DATABASE=${BOOKSTACK__DB_DATABASE}
+            - MYSQL_USER=${BOOKSTACK__DB_USER}
+            - MYSQL_PASSWORD=${BOOKSTACK__DB_PASS}
+        volumes:
+            - "./dockerData/bookstack_db_data:/config"
+            #- bookstackdbdata:/config
+
+    vaultwarden:
+        image: vaultwarden/server:latest
+        container_name: vaultwarden
+        restart: unless-stopped
+        ports:
+            - "6876:80"
+        env_file: 
+            - .env
+        environment:
+            - DOMAIN=${VAULTWARDEN__DOMAIN}
+            - LOGIN_RATELIMIT_MAX_BURST=${VAULTWARDEN__LOGIN_RATELIMIT_MAX_BURST}
+            - LOGIN_RATELIMIT_SECONDS=${VAULTWARDEN__LOGIN_RATELIMIT_SECONDS}
+            - ADMIN_RATELIMIT_MAX_BURST=${VAULTWARDEN__ADMIN_RATELIMIT_MAX_BURST}
+            - ADMIN_RATELIMIT_SECONDS=${VAULTWARDEN__ADMIN_RATELIMIT_SECONDS}
+            - ADMIN_TOKEN=${VAULTWARDEN__ADMIN_TOKEN}
+            - SENDS_ALLOWED=${VAULTWARDEN__SENDS_ALLOWED}
+            - EMERGENCY_ACCESS_ALLOWED=${VAULTWARDEN__EMERGENCY_ACCESS_ALLOWED}
+            - WEB_VAULT_ENABLED=${VAULTWARDEN__WEB_VAULT_ENABLED}
+            - SIGNUPS_ALLOWED=${VAULTWARDEN__SIGNUPS_ALLOWED}
+            - SIGNUPS_VERIFY=${VAULTWARDEN__SIGNUPS_VERIFY}
+            - SIGNUPS_VERIFY_RESEND_TIME=${VAULTWARDEN__SIGNUPS_VERIFY_RESEND_TIME}
+            - SIGNUPS_VERIFY_RESEND_LIMIT=${VAULTWARDEN__SIGNUPS_VERIFY_RESEND_LIMIT}
+            - SIGNUPS_DOMAINS_WHITELIST=${VAULTWARDEN__SIGNUPS_DOMAINS_WHITELIST}
+            - SMTP_HOST=${VAULTWARDEN__SMTP_HOST}
+            - SMTP_FROM=${VAULTWARDEN__SMTP_FROM}
+            - SMTP_FROM_NAME=${VAULTWARDEN__SMTP_FROM_NAME}
+            - SMTP_SECURITY=${VAULTWARDEN__SMTP_SECURITY}
+            - SMTP_PORT=${VAULTWARDEN__SMTP_PORT}
+            - SMTP_USERNAME=${VAULTWARDEN__SMTP_USERNAME}
+            - SMTP_PASSWORD=${VAULTWARDEN__SMTP_PASSWORD}
+            - SMTP_AUTH_MECHANISM=${VAULTWARDEN__SMTP_AUTH_MECHANISM}
+        volumes:
+        - "./dockerData/vaultwarden:/data"
+        
+    privatebin:
+        image: privatebin/nginx-fpm-alpine:latest
+        container_name: privatebin
+        restart: unless-stopped
+        ports:
+        - "6877:8080"
+        read_only: true
+        volumes:
+        - "./dockerData/privatebin/conf.php:/srv/cfg/conf.php:ro"
+        - "./dockerData/privatebin/privatebin-data:/srv/data"
+
+    portainer:
+        image: portainer/portainer-ce:latest
+        container_name: portainer
+        restart: always
+        ports:
+            - "8000:8000/tcp"
+            - "9443:9443/tcp"   
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "./dockerData/portainer/data:/data"  
+            
+    watchtower:
+        image: containrrr/watchtower:latest
+        container_name: watchtower
+        restart: unless-stopped
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+
+#Windows Mount Issue
+#volumes:
+#    bookstackdata:
+#    bookstackdbdata:
+    
