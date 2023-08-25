@@ -11,7 +11,8 @@ fi
 /usr/bin/apt upgrade -y
 
 # Install base packages
-PACKAGES="git
+PACKAGES="
+git
 curl
 wget
 unzip
@@ -34,6 +35,7 @@ neofetch
 zsh
 dialog
 molly-guard"
+echo /usr/bin/apt install -y "$(tr '\n' ' ' <<< "$PACKAGES")"
 /usr/bin/apt install -y "$(tr '\n' ' ' <<< "$PACKAGES")"
 
 # Set default shell to zsh
