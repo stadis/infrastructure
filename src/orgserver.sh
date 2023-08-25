@@ -61,13 +61,9 @@ fi
 
 # Use docker-compose to start all the containers
 cd ./resources || exit
-/usr/bin/docker compose up -d
-cd ../
 
 echo
 echo "Almost there!"
 echo "- Setup Docker container secrets"
-echo "- Setup HealthChecks for cronjobs"
+echo "- Run /usr/bin/docker compose up -d"
 echo
-
-cd ~ || exit
