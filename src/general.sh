@@ -70,5 +70,5 @@ if [ -f ~/.gitconfig ]; then /usr/bin/mv ~/.gitconfig ~/.gitconfig.bak; fi
 /usr/bin/cp ./resources/unattended-upgrades/* /etc/apt/apt.conf.d/
 
 # sysctl tweaks
-#/usr/bin/cp ./resources/sysctl.conf /etc/sysctl.conf
-#/usr/sbin/sysctl -p
+/usr/bin/cp ./resources/sysctl.conf /etc/sysctl.conf
+/usr/sbin/sysctl -p
