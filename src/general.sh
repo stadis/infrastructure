@@ -14,7 +14,28 @@ fi
 PACKAGES="
 git
 curl
-wget"
+wget
+unzip
+zip
+htop
+vim
+sed
+apt-transport-https
+ca-certificates
+software-properties-common
+fail2ban
+dos2unix
+unattended-upgrades
+gnupg
+gnupg-agent
+lsb-release
+rsync
+mosh
+neofetch
+zsh
+dialog
+molly-guard
+"
 /usr/bin/apt install -y "$(tr '\n' ' ' <<< "$PACKAGES")"
 
 # Set default shell to zsh
