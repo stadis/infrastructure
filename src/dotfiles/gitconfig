@@ -1,0 +1,5 @@
+[user]
+        email = marcel@scherbinek.de
+        name = scherbinek
+[credential]
+        helper = store
