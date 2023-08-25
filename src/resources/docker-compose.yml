@@ -1,0 +1,9 @@
+---
+version: "3.6"
+services:
+    ittools:
+        image: corentinth/it-tools:latest
+        container_name: it-tools
+        restart: unless-stopped
+        ports:
+            - "6874:80"    
