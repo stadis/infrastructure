@@ -65,5 +65,5 @@ cd ./resources || exit
 echo
 echo "Almost there!"
 echo "- Setup Docker container secrets"
-echo "- Run /usr/bin/docker compose up -d"
+echo "- Run /usr/bin/docker compose up -d (should be root user when running this)"
 echo
