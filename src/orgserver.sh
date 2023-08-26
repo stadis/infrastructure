@@ -26,6 +26,7 @@ echo \
 
 # Install main server packages
 PACKAGES="
+nginx
 snapd
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
