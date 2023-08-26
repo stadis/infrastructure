@@ -6,7 +6,7 @@ services:
         container_name: it-tools
         restart: unless-stopped
         ports:
-            - "6874:80"
+            - "8443:80"
     
     bookstack:
         image: lscr.io/linuxserver/bookstack
