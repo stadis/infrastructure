@@ -32,7 +32,7 @@ software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
-/usr/bin/cp ./resources/nginx.conf /etc/nginx/sites-available/default
+/usr/bin/cp ./resources/default /etc/nginx/sites-available/default
 
 # Add crontabs
 #(/usr/bin/crontab -l ; echo "*/15 * * * * /root/ddns.sh") | /usr/bin/crontab -
