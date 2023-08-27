@@ -38,6 +38,14 @@ molly-guard
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
+# Install my SSH key
+#/usr/bin/mkdir -p ~/.ssh
+#/usr/bin/chmod 700 ~/.ssh
+#/usr/bin/cp ./resources/ssh-keys/* ~/.ssh/
+#/usr/bin/chmod 600 ~/.ssh/*
+#/usr/bin/cat  ~/.ssh/*.pub >> ~/.ssh/authorized_keys
+#/usr/bin/chmod 644 ~/.ssh/authorized_keys
+
 # Set default shell to zsh
 /usr/bin/chsh -s "$(which zsh)"
 
