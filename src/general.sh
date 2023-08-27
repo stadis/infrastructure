@@ -38,13 +38,13 @@ molly-guard
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
-# Install my SSH key
-#/usr/bin/mkdir -p ~/.ssh
-#/usr/bin/chmod 700 ~/.ssh
-#/usr/bin/cp ./resources/ssh-keys/* ~/.ssh/
-#/usr/bin/chmod 600 ~/.ssh/*
-#/usr/bin/cat  ~/.ssh/*.pub >> ~/.ssh/authorized_keys
-#/usr/bin/chmod 644 ~/.ssh/authorized_keys
+# Install SSH key
+ssh-keygen -f $HOME/.ssh/id_rsa -N ''
+/usr/bin/chmod 600 $HOME/.ssh/*
+/usr/bin/cat  $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
+/usr/bin/chmod 644 $HOME/.ssh/authorized_keys
+# Upload keys (password required)
+/usr/bin/cat $HOME/.ssh/id_rsa.pub | ssh -p23 u364842@u364842.your-storagebox.de install-ssh-key
 
 # Set default shell to zsh
 /usr/bin/chsh -s "$(which zsh)"
