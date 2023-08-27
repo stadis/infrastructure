@@ -32,8 +32,6 @@ software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
-#/usr/bin/cp ./resources/default /etc/nginx/sites-available/default
-
 # Add crontabs
 #(/usr/bin/crontab -l ; echo "*/15 * * * * /root/ddns.sh") | /usr/bin/crontab -
 #(/usr/bin/crontab -l ; echo "0 0 * * * certbot renew --dns-cloudflare --dns-cloudflare-credentials /root/CF-certbot.txt") | /usr/bin/crontab -
@@ -47,8 +45,10 @@ software-properties-common
 /usr/bin/snap set certbot trust-plugin-with-root=ok
 
 # Let's Encrypt Certificates
-#certbot run -n --nginx --agree-tos -d tools.stadis.de,docs.stadis.de,vault.stadis.de,pastebin.stadis.de,portainer-org.stadis.de -m marcel@scherbinek.de --redirect
-#/usr/bin/systemctl restart nginx
+certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis.de,docs.stadis.de,vault.stadis.de,pastebin.stadis.de,portainer-org.stadis.de -m marcel@scherbinek.de --redirect
+# Update Nginx Reverse Proxy
+/usr/bin/cp ./resources/default /etc/nginx/sites-available/default
+/usr/bin/systemctl restart nginx
 
 if [ "$1" = "sync" ]; then
     # Sync data from backup server
