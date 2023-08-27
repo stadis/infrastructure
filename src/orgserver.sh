@@ -32,8 +32,7 @@ software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
-# TODO cp repo to  /etc/nginx/sites-available/default
-#/usr/bin/cp ./resources/secrets/*.txt /etc/nginx/sites-available/default
+/usr/bin/cp ./resources/nginx.conf /etc/nginx/sites-available/default
 
 # Add crontabs
 #(/usr/bin/crontab -l ; echo "*/15 * * * * /root/ddns.sh") | /usr/bin/crontab -
@@ -46,11 +45,10 @@ software-properties-common
 /usr/bin/snap refresh
 /usr/bin/snap install certbot --classic
 /usr/bin/snap set certbot trust-plugin-with-root=ok
-#/usr/bin/snap install certbot-dns-cloudflare
-#/usr/bin/snap connect certbot:plugin certbot-dns-cloudflare
 
 # Let's Encrypt Certificates
-certbot run -n certonly --nginx --agree-tos -d tools.stadis.de,docs.stadis.de -m marcel@scherbinek.de --redirect
+certbot run -n --nginx --agree-tos -d tools.stadis.de,docs.stadis.de,vault.stadis.de,pastebin.stadis.de,portainer-org.stadis.de -m marcel@scherbinek.de --redirect
+/usr/bin/systemctl restart nginx
 
 if [ "$1" = "sync" ]; then
     # Sync data from backup server
@@ -72,6 +70,6 @@ cd ./resources || exit
 
 echo
 echo "Almost there!"
-echo "- Setup Docker container secrets"
+echo "- Setup Docker container secrets .env"
 echo "- Run /usr/bin/docker compose up -d (should be root user when running this)"
 echo
