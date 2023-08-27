@@ -70,6 +70,6 @@ cd ./resources || exit
 
 echo
 echo "Almost there!"
-echo "- Setup Docker container secrets .env"
+echo "- Setup Docker container .env & dockerData configs"
 echo "- Run /usr/bin/docker compose up -d (should be root user when running this)"
 echo
