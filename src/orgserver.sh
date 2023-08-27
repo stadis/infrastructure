@@ -32,7 +32,7 @@ software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
-/usr/bin/cp ./resources/default /etc/nginx/sites-available/default
+#/usr/bin/cp ./resources/default /etc/nginx/sites-available/default
 
 # Add crontabs
 #(/usr/bin/crontab -l ; echo "*/15 * * * * /root/ddns.sh") | /usr/bin/crontab -
@@ -47,8 +47,8 @@ software-properties-common
 /usr/bin/snap set certbot trust-plugin-with-root=ok
 
 # Let's Encrypt Certificates
-certbot run -n --nginx --agree-tos -d tools.stadis.de,docs.stadis.de,vault.stadis.de,pastebin.stadis.de,portainer-org.stadis.de -m marcel@scherbinek.de --redirect
-/usr/bin/systemctl restart nginx
+#certbot run -n --nginx --agree-tos -d tools.stadis.de,docs.stadis.de,vault.stadis.de,pastebin.stadis.de,portainer-org.stadis.de -m marcel@scherbinek.de --redirect
+#/usr/bin/systemctl restart nginx
 
 if [ "$1" = "sync" ]; then
     # Sync data from backup server
