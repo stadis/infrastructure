@@ -8,15 +8,19 @@ DestFolder_WWW="/backups/ms/www"
 #DestFolder_RootHomeFolder="/root/backups/ms/root-home"
 DestSSHInfo="u364842@u364842.your-storagebox.de"
 
-while IFS== read -r key value; do
-  printf -v "$key" %s "$value" && export "$key"
-done <$HOME/infrastructure/src/resources/.env
+#while IFS== read -r key value; do
+#  printf -v "$key" %s "$value" && export "$key"
+#done <$HOME/infrastructure/src/resources/.env
+export $(grep -v '^#'  $HOME/infrastructure/src/resources/.env | xargs)
 
 # Main Server
 ## MySQL
 /usr/bin/docker exec bookstack_db sh -c 'exec /usr/bin/mysqldump --all-databases --single-transaction --quick --lock-tables=false -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD' > /tmp/sql-dump.sql
+
 /usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql u364842@u364842.your-storagebox.de:/backups/ms/www/WWW-SQL-Dump.sql # u364842@u364842.your-storagebox.de:/backups/ms/www
+#/usr/bin/rsync --progress -e 'ssh -p23' --recursive /tmp/sql-dump.sql u364842@u364842.your-storagebox.de:/backups/ms/www/WWW-SQL-Dump.sql
 # /usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql $DestSSHInfo:$DestFolder_WWW/WWW-SQL-Dump.sql
+
 /usr/bin/rm /tmp/sql-dump.sql
 # /usr/bin/docker exec -it <container> mysql -u root -p
 # USE <database>
