@@ -28,8 +28,12 @@ echo \
 PACKAGES="
 nginx
 snapd
+software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
+
+# TODO cp repo to  /etc/nginx/sites-available/default
+#/usr/bin/cp ./resources/secrets/*.txt /etc/nginx/sites-available/default
 
 # Add crontabs
 #(/usr/bin/crontab -l ; echo "*/15 * * * * /root/ddns.sh") | /usr/bin/crontab -
@@ -44,6 +48,9 @@ snapd
 /usr/bin/snap set certbot trust-plugin-with-root=ok
 #/usr/bin/snap install certbot-dns-cloudflare
 #/usr/bin/snap connect certbot:plugin certbot-dns-cloudflare
+
+# Let's Encrypt Certificates
+certbot run -n certonly --nginx --agree-tos -d tools.stadis.de,docs.stadis.de -m marcel@scherbinek.de --redirect
 
 if [ "$1" = "sync" ]; then
     # Sync data from backup server
