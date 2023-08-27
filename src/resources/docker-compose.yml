@@ -99,7 +99,7 @@ services:
         container_name: portainer
         restart: always
         ports:
-            - "6878:8000/tcp"
+            - "6878:9000/tcp"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
             - "./dockerData/portainer/data:/data"  
