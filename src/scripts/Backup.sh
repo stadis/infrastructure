@@ -1,19 +1,27 @@
 #!/bin/bash
 
-DestFolder_WWW="/root/backups/ms/www"
-DestFolder_WWW_var="/root/backups/ms/www/var-www"
-DestFolder_WWW_apache2="/root/backups/ms/www/etc-apache2"
-DestFolder_WWW_letsencrypt="/root/backups/ms/www/etc-letsencrypt"
-DestFolder_Docker="/root/backups/ms/docker"
-DestFolder_RootHomeFolder="/root/backups/ms/root-home"
-DB_PW=$(<~/DB_PW.txt)
-DestSSHInfo="root@real.chse.dev"
+DestFolder_WWW="/backups/ms/www"
+#DestFolder_WWW_var="/root/backups/ms/www/var-www"
+#DestFolder_WWW_apache2="/root/backups/ms/www/etc-apache2"
+#DestFolder_WWW_letsencrypt="/root/backups/ms/www/etc-letsencrypt"
+#DestFolder_Docker="/root/backups/ms/docker"
+#DestFolder_RootHomeFolder="/root/backups/ms/root-home"
+DestSSHInfo="u364842@u364842.your-storagebox.de"
+
+while IFS== read -r key value; do
+  printf -v "$key" %s "$value" && export "$key"
+done <$HOME/infrastructure/src/resources/.env
 
 # Main Server
 ## MySQL
-/usr/bin/docker exec mysql sh -c 'exec mysqldump --all-databases --single-transaction --quick --lock-tables=false -u root -p'"$DB_PW" > /tmp/sql-dump.sql
-/usr/bin/rsync -e 'ssh -p 1010' -az /tmp/sql-dump.sql $DestSSHInfo:$DestFolder_WWW/WWW-SQL-Dump.sql
+/usr/bin/docker exec bookstack_db sh -c 'exec /usr/bin/mysqldump --all-databases --single-transaction --quick --lock-tables=false -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD' > /tmp/sql-dump.sql
+/usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql u364842@u364842.your-storagebox.de:/backups/ms/www/WWW-SQL-Dump.sql # u364842@u364842.your-storagebox.de:/backups/ms/www
+# /usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql $DestSSHInfo:$DestFolder_WWW/WWW-SQL-Dump.sql
 /usr/bin/rm /tmp/sql-dump.sql
+# /usr/bin/docker exec -it <container> mysql -u root -p
+# USE <database>
+# show tables;
+
 ## /var/www, /etc/apache2, /etc/letsencrypt
 /usr/bin/rsync -e 'ssh -p 1010' -azrd --delete /var/www/* $DestSSHInfo:$DestFolder_WWW_var/
 /usr/bin/rsync -e 'ssh -p 1010' -azrd --delete /etc/apache2/* $DestSSHInfo:$DestFolder_WWW_apache2/
