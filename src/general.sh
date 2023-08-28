@@ -77,6 +77,9 @@ if [ -f ~/.vimrc ]; then /usr/bin/mv ~/.vimrc ~/.vimrc.bak; fi
 if [ -f ~/.gitconfig ]; then /usr/bin/mv ~/.gitconfig ~/.gitconfig.bak; fi
 /usr/bin/ln -s ~/infrastructure/src/dotfiles/gitconfig ~/.gitconfig
 
+# Setup Scripts
+/usr/bin/cp scripts/* ~/Scripts/
+
 # Setup MOTD
 /usr/bin/cp ./resources/motd.sh /etc/motd.sh
 /usr/bin/chmod +x /etc/motd.sh
