@@ -26,6 +26,14 @@ services:
             - DB_PASS=${BOOKSTACK__DB_PASS}
             - DB_DATABASE=${BOOKSTACK__DB_DATABASE}
             - APP_LANG=${BOOKSTACK__APP_LANG}
+            - MAIL_DRIVER=${BOOKSTACK__MAIL_DRIVER}
+            - MAIL_HOST=${BOOKSTACK__MAIL_HOST}
+            - MAIL_PORT=${BOOKSTACK__MAIL_PORT}
+            - MAIL_ENCRYPTION=${BOOKSTACK__MAIL_ENCRYPTION}
+            - MAIL_USERNAME=${BOOKSTACK__MAIL_USERNAME}
+            - MAIL_PASSWORD=${BOOKSTACK__MAIL_PASSWORD}
+            - MAIL_FROM=${BOOKSTACK__MAIL_FROM}
+            - MAIL_FROM_NAME=${BOOKSTACK__MAIL_FROM_NAME}
         volumes:
             - "./dockerData/bookstack_app_data:/config"
             #- bookstackdata:/config
