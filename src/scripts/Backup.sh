@@ -6,7 +6,7 @@ DestFolder_Docker="backups/ms/docker"
 DestFolder_RootHomeFolder="backups/ms/root-home"
 DestSSHInfo="u364842@u364842.your-storagebox.de"
 
-export $(grep -v '^#'  ../src/resources/.env | xargs)
+export $(grep -v '^#'  ../resources/.env | xargs)
 
 # Org Server
 ## MySQL
