@@ -47,26 +47,11 @@ certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis
 /usr/bin/cp ./resources/default /etc/nginx/sites-available/default
 /usr/bin/systemctl restart nginx
 
-if [ "$1" = "sync" ]; then
-    # Sync data from backup server
-    backupIP="dns_or_ip"
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p1010 -o StrictHostKeyChecking=no' root@$backupIP:/root/backups/www/var-www/ /var/www/
-    /usr/bin/chown -R www-data:www-data /var/www/
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p1010 -o StrictHostKeyChecking=no' root@$backupIP:/root/backups/www/etc-apache2/ /etc/apache2/
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p1010 -o StrictHostKeyChecking=no' root@$backupIP:/root/backups/www/etc-letsencrypt/ /etc/letsencrypt/
-    /usr/bin/systemctl restart apache2
-    ## Home Folder
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p1010 -o StrictHostKeyChecking=no' root@$backupIP:/root/backups/hs/root-home/ /root/
-    ## Docker Stuff
-    /usr/bin/mkdir -p /dockerData
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p1010 -o StrictHostKeyChecking=no' root@$backupIP:/root/backups/hs/docker/ /dockerData/
-fi
-
 # Use docker-compose to start all the containers
 cd ./resources || exit
 
 echo
 echo "Almost there!"
-echo "- Setup Docker container .env & dockerData configs"
+echo "- Setup Docker container .env & dockerData configs. Optional: Sync from Backup"
 echo "- Run /usr/bin/docker compose up -d (should be root user when running this)"
 echo
