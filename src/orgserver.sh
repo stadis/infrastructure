@@ -32,12 +32,9 @@ software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
-# Add crontabs
-#(/usr/bin/crontab -l ; echo "*/15 * * * * /root/ddns.sh") | /usr/bin/crontab -
-#(/usr/bin/crontab -l ; echo "0 0 * * * certbot renew --dns-cloudflare --dns-cloudflare-credentials /root/CF-certbot.txt") | /usr/bin/crontab -
+# Add crontabs or check by sudo crontab -u root -e
 (/usr/bin/crontab -l ; echo "0 1 * * * /root/Scripts/Backup.sh") | /usr/bin/crontab -
 #(/usr/bin/crontab -l ; echo "0 2 * * * docker image prune -a -f && docker volume prune -f && docker network prune -f") | /usr/bin/crontab -
-#(/usr/bin/crontab -l ; echo "0 * * * * curl --silent https://missionpark.net?es=cron&guid=edaiqo-pgoemj-cenpat-cbgkjr-fomgjy > /dev/null 2>&1") | /usr/bin/crontab -
 
 # Snaps
 /usr/bin/snap refresh
