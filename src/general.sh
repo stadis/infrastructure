@@ -51,7 +51,7 @@ ssh-keygen -f $HOME/.ssh/id_rsa -N ''
 #/usr/bin/sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/g' /etc/ssh/sshd_config
 #/usr/bin/sed -i 's/#PermitRootLogin no/PermitRootLogin prohibit-password/g' /etc/ssh/sshd_config
 #/usr/bin/sed -i 's/#UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
-#/usr/bin/systemctl restart sshd
+/usr/bin/systemctl restart sshd
 
 # Set default shell to zsh
 /usr/bin/chsh -s "$(which zsh)"
