@@ -6,7 +6,7 @@ DestFolder_Docker="backups/ms/docker"
 DestFolder_RootHomeFolder="backups/ms/root-home"
 DestSSHInfo="u364842@u364842.your-storagebox.de"
 
-export $(grep -v '^#'  ../resources/.env | xargs)
+export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs)
 
 # Org Server
 ## MySQL
@@ -17,6 +17,6 @@ export $(grep -v '^#'  ../resources/.env | xargs)
 ## /etc/letsencrypt
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete /etc/letsencrypt/* $DestSSHInfo:$DestFolder_WWW_letsencrypt/
 ## /dockerData
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete ../resources/dockerData/* $DestSSHInfo:$DestFolder_Docker/
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete /home/$SUDO_USER/infrastructure/src/resources/dockerData/* $DestSSHInfo:$DestFolder_Docker/
 ## /root
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete /root/* $DestSSHInfo:$DestFolder_RootHomeFolder/
