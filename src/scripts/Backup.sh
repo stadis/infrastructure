@@ -8,6 +8,11 @@ DestSSHInfo="u364842@u364842.your-storagebox.de"
 
 export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs)
 
+# sudo ssh -p23 u364842@u364842.your-storagebox.de
+# cd backups/ms/www 
+# ls -l
+# -rw-r--r--  1 u364842  u364842  2574545 Aug 28 07:03 WWW-SQL-Dump.sql
+
 # Org Server
 ## MySQL
 /usr/bin/docker exec bookstack_db sh -c 'exec /usr/bin/mysqldump --all-databases --single-transaction --quick --lock-tables=false -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD' > /tmp/sql-dump.sql
