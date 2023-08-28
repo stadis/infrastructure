@@ -17,6 +17,6 @@ export $(grep -v '^#'  /home/$USER/infrastructure/src/resources/.env | xargs)
 ## /etc/letsencrypt
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete /etc/letsencrypt/* $DestSSHInfo:$DestFolder_WWW_letsencrypt/
 ## /dockerData
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete /dockerData/* $DestSSHInfo:$DestFolder_Docker/ 
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete /home/$USER/infrastructure/src/resources/dockerData/* $DestSSHInfo:$DestFolder_Docker/
 ## /root
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete /root/* $DestSSHInfo:$DestFolder_RootHomeFolder/
