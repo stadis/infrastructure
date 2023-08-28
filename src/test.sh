@@ -1,3 +1,3 @@
 #!/bin/bash
 
-/usr/bin/cp scripts/* ~/Scripts/
+/usr/bin/mkdir -p ~/Scripts && /usr/bin/cp scripts/* ~/Scripts/
