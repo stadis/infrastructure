@@ -99,7 +99,7 @@ services:
         - "6877:8080"
         read_only: true
         volumes:
-        - "./dockerData/privatebin/conf.php:/srv/cfg/conf.php:ro"
+        - "./dockerData/privatebin/conf.php:/srv/cfg:ro"
         - "./dockerData/privatebin/privatebin-data:/srv/data"
 
     portainer:
