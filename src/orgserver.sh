@@ -48,10 +48,15 @@ certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis
 /usr/bin/systemctl restart nginx
 
 # Use docker-compose to start all the containers
-cd ./resources || exit
+cd resources || exit
 
 echo
 echo "Almost there!"
-echo "- Setup Docker container .env & dockerData configs. Optional: Sync from Backup"
-echo "- Run /usr/bin/docker compose up -d (should be root user when running this)"
+echo "Initial steps:"
+echo "- Setup Docker container .env & dockerData configs."
+echo "- Run  docker compose up -d          (should be root user when running this)"
+echo "Sync steps (for restore from backup):"
+echo "- Setup Docker container .env & dockerData configs."
+echo "- Run docker compose up -d          (should be root user when running this)"
+echo "- Run bash orgserver-sync.sh        (should be root user when running this)"
 echo
