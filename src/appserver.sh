@@ -70,7 +70,7 @@ if [ "$2" = "sync" ]; then
     /usr/bin/rsync -azrd --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/ ./resources/dockerData
 fi
 
-# Use docker-compose to start all the containers
+# Use docker-compose to initially start all the containers
 cd ./resources || exit
 /usr/bin/docker compose up -d
 cd ../
@@ -82,6 +82,11 @@ if [ "$2" = "sync" ]; then
     /usr/bin/rsync -azrd --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql /tmp/sql-dump.sql
     /usr/bin/cat /tmp/sql-dump.sql | /usr/bin/docker exec -i bookstack_db /usr/bin/mysql -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD
     /usr/bin/rm /tmp/sql-dump.sql
+
+    # Restart container
+    cd ./resources || exit
+    /usr/bin/docker compose up restart
+    cd ../
 fi
 
 echo
