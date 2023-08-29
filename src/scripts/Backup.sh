@@ -26,8 +26,10 @@ export $(grep -v '^#' ~stadisadm/infrastructure/src/resources/.env | xargs) # SU
 
 # Stop running Container
 /usr/bin/docker stop $(/usr/bin/docker ps -a -q)
+sleep 15
 ## /dockerData
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete ~stadisadm/infrastructure/src/resources/dockerData/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/
+sleep 5
 # Start all stopped Container
 /usr/bin/docker restart $(/usr/bin/docker ps -a -q)
 ## /etc/letsencrypt
