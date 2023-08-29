@@ -85,7 +85,7 @@ if [ "$2" = "sync" ]; then
 
     # Restart container
     cd ./resources || exit
-    /usr/bin/docker compose up restart
+    /usr/bin/docker compose restart
     cd ../
 fi
 
