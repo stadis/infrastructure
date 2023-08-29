@@ -44,7 +44,7 @@ software-properties-common
 
 # Add crontabs or check by sudo crontab -u root -e
 (/usr/bin/crontab -l ; echo "0 1 * * * /root/Scripts/Backup.sh") | /usr/bin/crontab -
-#(/usr/bin/crontab -l ; echo "0 2 * * * docker image prune -a -f && docker volume prune -f && docker network prune -f") | /usr/bin/crontab -
+(/usr/bin/crontab -l ; echo "0 2 * * * docker image prune -a -f && docker volume prune -f && docker network prune -f") | /usr/bin/crontab -
 
 # Snaps
 /usr/bin/snap refresh
@@ -53,20 +53,31 @@ software-properties-common
 
 # Let's Encrypt Certificates
 certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis.de,docs.stadis.de,vault.stadis.de,portainer-org.stadis.de -m marcel@scherbinek.de --redirect
-# Update Nginx Reverse Proxy
+# Update and Restart Nginx Reverse Proxy
 /usr/bin/cp ./resources/default /etc/nginx/sites-available/default
 /usr/bin/systemctl restart nginx
 
+if [ "$2" = "sync" ]; then
+    ## Set Environment Variables
+    export $(grep -v '^#' resources/.env | xargs)
+    
+    /usr/bin/rsync -azrdu --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql /tmp/sql-dump.sql
+    /usr/bin/cat /tmp/sql-dump.sql | /usr/bin/docker exec -i bookstack_db /usr/bin/mysql -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD
+    /usr/bin/rm /tmp/sql-dump.sql
+    ## Home Folder
+    /usr/bin/rsync -azrdu --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_ROOTHOMEFOLDER/ /root/
+    ## Docker Stuff
+    /usr/bin/mkdir -p ./resources/dockerData
+    /usr/bin/rsync -azrdu --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/ /dockerData/
+fi
+
 # Use docker-compose to start all the containers
-cd resources || exit
+cd ./resources || exit
+/usr/bin/docker compose up -d
+cd ../
 
 echo
-echo "Almost there!"
-echo "Initial steps:"
-echo "- Setup Docker container .env & dockerData configs."
-echo "- Run  docker compose up -d          (should be root user when running this)"
-echo "Sync steps (for restore from backup):"
-echo "- Setup Docker container .env & dockerData configs."
-echo "- Run docker compose up -d          (should be root user when running this)"
-echo "- Run bash orgserver-sync.sh        (should be root user when running this)"
+echo "Finished!"
 echo
+
+cd ~ || exit
