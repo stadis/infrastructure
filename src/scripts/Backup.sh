@@ -1,11 +1,6 @@
 #!/bin/bash
 
-DestFolder_WWW="backups/ms/www"
-DestFolder_WWW_letsencrypt="backups/ms/www/etc-letsencrypt"
-DestFolder_Docker="backups/ms/docker"
-DestFolder_RootHomeFolder="backups/ms/root-home"
-DestSSHInfo="u364842@u364842.your-storagebox.de"
-
+# Set Environment Variables
 export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs)
 
 # grep Backup.sh /var/log/cron
@@ -26,12 +21,12 @@ export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs
 # Org Server
 ## MySQL
 /usr/bin/docker exec bookstack_db sh -c 'exec /usr/bin/mysqldump --all-databases --single-transaction --quick --lock-tables=false -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD' > /tmp/sql-dump.sql
-/usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql $DestSSHInfo:$DestFolder_WWW/WWW-SQL-Dump.sql
+/usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql
 /usr/bin/rm /tmp/sql-dump.sql
 
 ## /etc/letsencrypt
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete /etc/letsencrypt/* $DestSSHInfo:$DestFolder_WWW_letsencrypt/
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete /etc/letsencrypt/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW_LETSENCRYPT/
 ## /dockerData
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete /home/$SUDO_USER/infrastructure/src/resources/dockerData/* $DestSSHInfo:$DestFolder_Docker/
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete /home/$SUDO_USER/infrastructure/src/resources/dockerData/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/
 ## /root
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete /root/* $DestSSHInfo:$DestFolder_RootHomeFolder/
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete /root/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_ROOTHOMEFOLDER/
