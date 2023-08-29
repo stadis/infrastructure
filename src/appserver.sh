@@ -63,10 +63,11 @@ if [ "$2" = "sync" ]; then
     echo $MESSAGE
     
     ## Home Folder
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_ROOTHOMEFOLDER/ /root/
+    /usr/bin/rsync -azrdu --delete -e 'ssh -p23 -o StrictHostKeyChecking=no' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_ROOTHOMEFOLDER/ /root/
     ## Docker Stuff
     /usr/bin/mkdir -p ./resources/dockerData
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/ /dockerData/
+    # /usr/bin/rsync -azrdu --delete -e 'ssh -p23 -o StrictHostKeyChecking=no' u364842@u364842.your-storagebox.de:backups/ms/docker/ /dockerData/
+    /usr/bin/rsync -azrdu --delete -e 'ssh -p23 -o StrictHostKeyChecking=no' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/ /dockerData/
 fi
 
 # Use docker-compose to start all the containers
@@ -76,7 +77,7 @@ cd ../
 
 if [ "$2" = "sync" ]; then
     ## Database backup after setting up db container
-    /usr/bin/rsync -azrdu --delete -e 'ssh -p23' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql /tmp/sql-dump.sql
+    /usr/bin/rsync -azrdu --delete -e 'ssh -p23 -o StrictHostKeyChecking=no' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql /tmp/sql-dump.sql
     /usr/bin/cat /tmp/sql-dump.sql | /usr/bin/docker exec -i bookstack_db /usr/bin/mysql -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD
     /usr/bin/rm /tmp/sql-dump.sql
 fi
