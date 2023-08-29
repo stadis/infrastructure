@@ -44,6 +44,7 @@ ssh-keygen -f $HOME/.ssh/id_rsa -N ''
 /usr/bin/cat  $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
 /usr/bin/chmod 644 $HOME/.ssh/authorized_keys
 # Upload keys (password required)
+ssh -o "StrictHostKeyChecking no" u364842@u364842.your-storagebox.de
 /usr/bin/cat $HOME/.ssh/id_rsa.pub | ssh -p23 u364842@u364842.your-storagebox.de install-ssh-key
 
 # Lockdown SSH
