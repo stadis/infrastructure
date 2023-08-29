@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set Environment Variables
-export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
+export $(grep -v '^#' ~stadisadm/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
 
 # grep Backup.sh /var/log/cron
 # grep Backup.sh /var/log/syslog
@@ -27,7 +27,7 @@ export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs
 # Stop running Container
 /usr/bin/docker stop $(/usr/bin/docker ps -a -q)
 ## /dockerData
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete /home/$SUDO_USER/infrastructure/src/resources/dockerData/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete ~stadisadm/infrastructure/src/resources/dockerData/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/
 # Start all stopped Container
 /usr/bin/docker restart $(/usr/bin/docker ps -a -q)
 ## /etc/letsencrypt
