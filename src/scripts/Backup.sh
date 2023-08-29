@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set Environment Variables
-export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs)
+export $(grep -v '^#' /home/$USER/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
 
 # grep Backup.sh /var/log/cron
 # grep Backup.sh /var/log/syslog
@@ -24,9 +24,13 @@ export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs
 /usr/bin/rsync -e 'ssh -p23' -az /tmp/sql-dump.sql $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql
 /usr/bin/rm /tmp/sql-dump.sql
 
-## /etc/letsencrypt
-/usr/bin/rsync -e 'ssh -p23' -azrd --delete /etc/letsencrypt/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW_LETSENCRYPT/
+# Stop running Container
+/usr/bin/docker stop $(/usr/bin/docker ps -a -q)
 ## /dockerData
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete /home/$SUDO_USER/infrastructure/src/resources/dockerData/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_DOCKER/
+# Start all stopped Container
+/usr/bin/docker restart $(/usr/bin/docker ps -a -q)
+## /etc/letsencrypt
+/usr/bin/rsync -e 'ssh -p23' -azrd --delete /etc/letsencrypt/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW_LETSENCRYPT/
 ## /root
 /usr/bin/rsync -e 'ssh -p23' -azrd --delete /root/* $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_ROOTHOMEFOLDER/
