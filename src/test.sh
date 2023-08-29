@@ -39,6 +39,7 @@ molly-guard
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
+echo $USER
 # Install SSH key
 ssh-keygen -f ~stadisadm/.ssh/id_rsa -N ''
 /usr/bin/chmod 600 ~stadisadm/.ssh/*
