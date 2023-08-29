@@ -8,10 +8,20 @@ DestSSHInfo="u364842@u364842.your-storagebox.de"
 
 export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs)
 
+# grep Backup.sh /var/log/cron
+# grep Backup.sh /var/log/syslog
 # sudo ssh -p23 u364842@u364842.your-storagebox.de
 # cd backups/ms/www 
 # ls -l
 # -rw-r--r--  1 u364842  u364842  2574545 Aug 28 07:03 WWW-SQL-Dump.sql
+
+# RSYNC
+# -e                          environment to be executed (rsync -e 'ssh ...')
+# -a, --archive               archive mode;
+# -z, --compress              compress file data during the transfer
+# -r, --recursive             recurse into directories
+# -d, --dirs                  transfer directories without recursing
+# --delete                    delete extraneous files from the receiving side (ones that aren't on the sending side)
 
 # Org Server
 ## MySQL
