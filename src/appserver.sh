@@ -6,8 +6,15 @@ if [ "$EUID" -ne 0 ]; then
     exit
 fi
 
+if [ -z "$1" ]; then
+    echo "You need to specify arguments for this script."
+    echo "bash appserver.sh secrets_path # Allow script to run, after you have configured secrets"
+    echo "bash appserver.sh secrets_path sync # Sync data from backup server."
+    exit
+fi
+
 # Do everything in general.sh first
-/usr/bin/bash general.sh
+/usr/bin/bash general.sh secrets
 
 # Change SSH Port
 /usr/bin/sed -i 's/#Port 22/Port 1000/g' /etc/ssh/sshd_config
@@ -31,6 +38,9 @@ snapd
 software-properties-common
 "
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
+
+# Move secrets
+/usr/bin/mv $1 ./resources
 
 # Add crontabs or check by sudo crontab -u root -e
 (/usr/bin/crontab -l ; echo "0 1 * * * /root/Scripts/Backup.sh") | /usr/bin/crontab -
