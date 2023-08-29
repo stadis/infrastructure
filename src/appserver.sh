@@ -76,7 +76,9 @@ cd ./resources || exit
 cd ../
 
 if [ "$2" = "sync" ]; then
-    ## Database backup after setting up db container
+    echo "Wait period until containers initialized.."
+    sleep 30
+    ## Database 
     /usr/bin/rsync -azrdu --delete -e 'ssh -p23 -o StrictHostKeyChecking=no' $RSYNC__DESTSSHINFO:$RSYNC__DESTFOLDER_WWW/WWW-SQL-Dump.sql /tmp/sql-dump.sql
     /usr/bin/cat /tmp/sql-dump.sql | /usr/bin/docker exec -i bookstack_db /usr/bin/mysql -u root -p$BOOKSTACK__MYSQL_ROOT_PASSWORD
     /usr/bin/rm /tmp/sql-dump.sql
