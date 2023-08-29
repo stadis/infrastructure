@@ -46,6 +46,7 @@ molly-guard
 # Install SSH key
 ssh-keygen -f $HOME/.ssh/id_rsa -N ''
 /usr/bin/chmod 600 $HOME/.ssh/*
+/usr/bin/chown $USER:$USER $HOME/.ssh/*
 /usr/bin/cat  $HOME/.ssh/*.pub >> $HOME/.ssh/authorized_keys
 /usr/bin/chmod 644 $HOME/.ssh/authorized_keys
 # Upload keys (password required)
