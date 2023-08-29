@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set Environment Variables
-export $(grep -v '^#' /home/$USER/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
+export $(grep -v '^#' /home/$SUDO_USER/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
 
 # grep Backup.sh /var/log/cron
 # grep Backup.sh /var/log/syslog
