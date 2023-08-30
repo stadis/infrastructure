@@ -8,7 +8,7 @@ Requirements
 * existing user stadisadm
 * secrets (.env) and backup password (interactive)
 
-**Application Server (stadis-app)**
+## Application Server (stadis-app)
 Ubuntu 22.04.3 LTS @AMD EPYC™ 7702 (4 Cores), 8 GB DDR4 RAM (ECC), 160 GB SSD
 ```bash
 git clone https://github.com/stadis/infrastructure.git && cd infrastructure/src
