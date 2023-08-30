@@ -5,9 +5,10 @@
 Shell Scripts to Setup Server.
 
 Requirements
-* Existing user stadisadm
-* Secrets and Passwords
+* existing user stadisadm
+* secrets (.env) and backup password (interactive)
 
+**Application Server (stadis-app)**
 ```bash
 git clone https://github.com/stadis/infrastructure.git && cd infrastructure/src
 nano .env # set secrets
