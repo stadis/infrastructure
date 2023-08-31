@@ -3,12 +3,12 @@
 # Set Environment Variables
 export $(grep -v '^#' ~stadisadm/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
 
+## Cronjobs
 # grep Backup.sh /var/log/cron
+## Cronjobs history
 # grep Backup.sh /var/log/syslog
-# sudo ssh -p23 u364842@u364842.your-storagebox.de
-# cd backups/ms/www 
-# ls -l
-# -rw-r--r--  1 u364842  u364842  2574545 Aug 28 07:03 WWW-SQL-Dump.sql
+## Cronjobs definitions (current user)
+# crontab -e
 
 # RSYNC
 # -e                          environment to be executed (rsync -e 'ssh ...')
