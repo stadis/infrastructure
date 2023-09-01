@@ -46,7 +46,7 @@ software-properties-common
 /usr/bin/sed -i '/cron.*/s/^#//g' /etc/rsyslog.d/50-default.conf
 # Add crontabs or check by sudo crontab -u root -e
 (/usr/bin/crontab -l ; echo "0 1 * * * /bin/bash /root/Scripts/Backup.sh") | /usr/bin/crontab -
-(/usr/bin/crontab -l ; echo "0 2 * * * /usr/bin/docker image prune -a -f && docker volume prune -f && docker network prune -f") | /usr/bin/crontab -
+(/usr/bin/crontab -l ; echo "0 2 * * * /usr/bin/docker image prune -a -f && /usr/bin/docker volume prune -f && /usr/bin/docker network prune -f") | /usr/bin/crontab -
 service rsyslog restart
 service cron restart
 
