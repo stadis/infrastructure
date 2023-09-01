@@ -7,8 +7,10 @@ export $(grep -v '^#' ~stadisadm/infrastructure/src/resources/.env | xargs) # SU
 # crontab -l
 ## Cronjobs history
 # grep Backup.sh /var/log/syslog
-## Cronjobs error
+## Cronjobs error (Cron Job)
 # nano /usr/bin/crontab
+## Cronjobs error (rsyslog)
+# nano /var/log/cron.log
 ## Cronjobs definitions (current user)
 # crontab -e
 
