@@ -4,7 +4,6 @@
 export $(grep -v '^#' ~stadisadm/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
 
 ## Cronjobs
-# grep Backup.sh /var/log/cron
 ## Cronjobs history
 # grep Backup.sh /var/log/syslog
 ## Cronjobs definitions (current user)
