@@ -42,6 +42,8 @@ software-properties-common
 # Move secrets
 /usr/bin/mv $1 ./resources
 
+# Cron logging (default: /etc/rsyslog.conf)
+#/etc/rsyslog.d/50-default.conf -i 's/#cron.*                         /var/log/cron.log/#cron.*                         /var/log/cron.log/g' /etc/rsyslog.d/50-default.conf
 # Add crontabs or check by sudo crontab -u root -e
 (/usr/bin/crontab -l ; echo "0 1 * * * /root/Scripts/Backup.sh") | /usr/bin/crontab -
 (/usr/bin/crontab -l ; echo "0 2 * * * docker image prune -a -f && docker volume prune -f && docker network prune -f") | /usr/bin/crontab -
