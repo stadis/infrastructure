@@ -4,8 +4,11 @@
 export $(grep -v '^#' ~stadisadm/infrastructure/src/resources/.env | xargs) # SUDO_USER | USER
 
 ## Cronjobs
+# crontab -l
 ## Cronjobs history
 # grep Backup.sh /var/log/syslog
+## Cronjobs error
+# nano /usr/bin/crontab
 ## Cronjobs definitions (current user)
 # crontab -e
 
