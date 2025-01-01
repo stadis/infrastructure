@@ -40,8 +40,10 @@ software-properties-common
 /usr/bin/apt install -y $(tr '\n' ' ' <<< "$PACKAGES")
 
 # Move secrets
+echo "Moving secrets.."
 /usr/bin/mv $1 ./resources
 
+echo "Setup Crontab.."
 # Uncomment cron logging (default: /etc/rsyslog.conf)
 /usr/bin/sed -i '/cron.*/s/^#//g' /etc/rsyslog.d/50-default.conf
 # Add crontabs or check by sudo crontab -u root -e
@@ -52,6 +54,7 @@ service rsyslog restart
 service cron restart
 
 # Snaps
+echo "Setup Certbot and install certificates.."
 /usr/bin/snap refresh
 /usr/bin/snap install certbot --classic
 /usr/bin/snap set certbot trust-plugin-with-root=ok
@@ -63,6 +66,7 @@ certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis
 /usr/bin/systemctl restart nginx
 
 if [ "$2" = "sync" ]; then
+    echo "Start Sync (1/2).."
     ## Set Environment Variables
     export $(grep -v '^#' ./resources/.env | xargs)
     echo $MESSAGE
@@ -81,6 +85,7 @@ cd ./resources || exit
 cd ../
 
 if [ "$2" = "sync" ]; then
+    echo "Start Sync (2/2).."
     echo "Wait period until containers initialized.."
     sleep 30
     ## Database 
