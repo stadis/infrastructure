@@ -57,7 +57,7 @@ service cron restart
 /usr/bin/snap set certbot trust-plugin-with-root=ok
 
 # Let's Encrypt Certificates
-certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis.de,docs.stadis.de,vault.stadis.de,portainer-app.stadis.de -m marcel@scherbinek.de --redirect
+certbot certonly --nginx --agree-tos --preferred-challenges http -d tools.stadis.de,api.stadis.de,docs.stadis.de,vault.stadis.de,portainer-app.stadis.de -m marcel@scherbinek.de --redirect
 # Update and Restart Nginx Reverse Proxy
 /usr/bin/cp ./resources/default /etc/nginx/sites-available/default
 /usr/bin/systemctl restart nginx
