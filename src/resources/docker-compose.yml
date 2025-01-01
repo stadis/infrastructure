@@ -7,6 +7,20 @@ services:
         restart: unless-stopped
         ports:
             - "6874:80"
+
+    stadis-api:
+        image: scherbinek/stadis-api:latest
+        container_name: stadis-api
+        restart: unless-stopped
+        ports:
+            - "8000:80"
+        env_file: 
+            - .env
+        environment:
+            - MINIO_ACCESS_KEY=${STADISAPI__MINIO_ACCESS_KEY}
+            - MINIO_SECRET_KEY=${STADISAPI__MINIO_SECRET_KEY}
+            - MINIO_ENDPOINT=${STADISAPI__MINIO_ENDPOINT}
+            - MINIO_BUCKET=${STADISAPI__MINIO_BUCKET}
     
     bookstack:
         image: lscr.io/linuxserver/bookstack
