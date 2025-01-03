@@ -21,6 +21,10 @@ services:
             - MINIO_SECRET_KEY=${STADISAPI__MINIO_SECRET_KEY}
             - MINIO_ENDPOINT=${STADISAPI__MINIO_ENDPOINT}
             - MINIO_BUCKET=${STADISAPI__MINIO_BUCKET}
+            - MYSQL_HOST=${STADISAPI__MYSQL_HOST}
+            - MYSQL_DATABASE=${STADISAPI__MYSQL_DATABASE}
+            - MYSQL_USER=${STADISAPI__MYSQL_USER}
+            - MYSQL_PASSWORD=${STADISAPI__MYSQL_PASSWORD}
     
     bookstack:
         image: lscr.io/linuxserver/bookstack
